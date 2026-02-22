@@ -20,7 +20,6 @@ final class AppCompositionRoot {
     private init() {}
 
     private lazy var apiClient: APIClientProtocol = APIClient()
-
     private lazy var breedsRepository: CatBreedsRepositoryProtocol = CatBreedsRepository(apiClient: apiClient)
     private lazy var imagesRepository: CatImagesRepositoryProtocol = CatImagesRepository(apiClient: apiClient)
 
@@ -32,9 +31,13 @@ final class AppCompositionRoot {
         FetchCatImageUseCase(repository: imagesRepository)
     }
 
-    func makeBreedsListViewModel() -> ViewModel {
-        ViewModel(
-            fetchBreedsPageUseCase: makeFetchCatBreedsPageUseCase(),
+    func makeBreedsListViewModel() -> BreedsListViewModel {
+        BreedsListViewModel(fetchBreedsPageUseCase: makeFetchCatBreedsPageUseCase())
+    }
+
+    func makeBreedDetailViewModel(breed: CatBreed) -> BreedDetailViewModel {
+        BreedDetailViewModel(
+            breed: breed,
             fetchCatImageUseCase: makeFetchCatImageUseCase()
         )
     }

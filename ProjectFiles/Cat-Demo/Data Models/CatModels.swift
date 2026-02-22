@@ -1,27 +1,19 @@
 // Copyright © 2021 Intuit, Inc. All rights reserved.
 import Foundation
 
-/// Data Model for network response
 struct CatBreed: Decodable {
-    /// internal ID
     let id: String?
-    
-    /// Name of cat (e.g. "Somali")
     let name: String?
-    
-    /// Description
     let description: String?
-    
-    /// Simple phrase describing cat - ex. "Active, energetic, independent, intelligent, gentle"
     let temperament: String?
-    
-    /// Range (e.g. 12-16)
-    let life_span: String?
-    
-    /// Reference
-    let wikipedia_url: String?
-    
-    /// Traits (0 or 1)
+    let origin: String?
+    let countryCodes: String?
+    let lifeSpan: String?
+    let wikipediaUrl: String?
+    let referenceImageId: String?
+    let image: CatImage?
+
+    // Boolean traits — the API sends 0 or 1, not a real Bool.
     let experimental: Int?
     let hairless: Int?
     let indoor: Int?
@@ -29,40 +21,58 @@ struct CatBreed: Decodable {
     let hypoallergenic: Int?
     let rare: Int?
     let natural: Int?
-    
-    /// Characteristic rankings (0 to 5)
+
+    // Characteristic ratings on a 1–5 scale.
     let adaptability: Int?
-    let affection_level: Int?
-    let child_friendly: Int?
-    let dog_friendly: Int?
-    let energy_level: Int?
+    let affectionLevel: Int?
+    let childFriendly: Int?
+    let dogFriendly: Int?
+    let energyLevel: Int?
     let grooming: Int?
-    let health_issues: Int?
+    let healthIssues: Int?
     let intelligence: Int?
-    let shedding_level: Int?
-    let social_needs: Int?
-    let stranger_friendly: Int?
+    let sheddingLevel: Int?
+    let socialNeeds: Int?
+    let strangerFriendly: Int?
     let vocalisation: Int?
-    
+
     struct CatImage: Decodable {
-        let id: String?             // "k71ULYfRr"
-        let width: Int?             // 2048
-        let height: Int?            // 1554
-        let url: String?            // "https://cdn2.thecatapi.com/images/k71ULYfRr.jpg"
+        let id: String?
+        let width: Int?
+        let height: Int?
+        let url: String?
     }
-    
-    let reference_image_id: String? // "k71ULYfRr"
-    let image: CatImage?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, description, temperament, origin
+        case countryCodes       = "country_codes"
+        case lifeSpan           = "life_span"
+        case wikipediaUrl       = "wikipedia_url"
+        case referenceImageId   = "reference_image_id"
+        case image
+        case experimental, hairless, indoor, lap, hypoallergenic, rare, natural
+        case adaptability
+        case affectionLevel     = "affection_level"
+        case childFriendly      = "child_friendly"
+        case dogFriendly        = "dog_friendly"
+        case energyLevel        = "energy_level"
+        case grooming
+        case healthIssues       = "health_issues"
+        case intelligence
+        case sheddingLevel      = "shedding_level"
+        case socialNeeds        = "social_needs"
+        case strangerFriendly   = "stranger_friendly"
+        case vocalisation
+    }
 }
 
 struct CatDetails: Decodable {
     let breeds: [CatBreedDetails]?
-    
+    let url: String?
+
     struct CatBreedDetails: Decodable {
         let id: String?
         let name: String?
         let temperament: String?
     }
-    
-    let url: String?    // image URL
 }

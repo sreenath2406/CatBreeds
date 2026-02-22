@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 final class CatImagesRepository: CatImagesRepositoryProtocol {
     private let apiClient: APIClientProtocol
@@ -15,28 +14,18 @@ final class CatImagesRepository: CatImagesRepositoryProtocol {
         self.apiClient = apiClient
     }
 
-    func fetchCatImage(breedId: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+    func fetchCatImage(breedId: String, completion: @escaping (Result<Data, Error>) -> Void) {
         apiClient.requestDecodable(CatAPIEndpoints.imageSearch(breedId: breedId)) { [weak self] (result: Result<[CatDetails], Error>) in
             guard let self else { return }
             switch result {
-            case .success(let details):
-                guard let urlString = details.first?.url, let url = URL(string: urlString) else {
-                    return completion(.failure(NetworkError.noData))
-                }
-                self.apiClient.requestData(url: url) { dataResult in
-                    switch dataResult {
-                    case .success(let data):
-                        guard let image = UIImage(data: data) else {
-                            return completion(.failure(NetworkError.imageDecodingFailed))
-                        }
-                        completion(.success(image))
-                    case .failure(let error):
-                        completion(.failure(error))
+                case .success(let details):
+                    guard let urlString = details.first?.url, let url = URL(string: urlString) else {
+                        return completion(.failure(NetworkError.noData))
                     }
-                }
+                    self.apiClient.requestData(url: url, completion: completion)
 
-            case .failure(let error):
-                completion(.failure(error))
+                case .failure(let error):
+                    completion(.failure(error))
             }
         }
     }

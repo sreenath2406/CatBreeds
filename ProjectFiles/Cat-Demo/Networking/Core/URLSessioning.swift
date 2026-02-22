@@ -10,12 +10,12 @@ import Foundation
 protocol URLSessioning {
     func dataTask(
         with request: URLRequest,
-        completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
+        completionHandler: @escaping @Sendable (Data?, URLResponse?, Error?) -> Void
     ) -> URLSessionDataTask
-    
+
     func dataTask(
         with url: URL,
-        completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
+        completionHandler: @escaping @Sendable (Data?, URLResponse?, Error?) -> Void
     ) -> URLSessionDataTask
 }
 

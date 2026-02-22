@@ -5,10 +5,10 @@
 //  Created by Sreenath Reddy on 2/21/26.
 //
 
-import UIKit
+import Foundation
 
 protocol FetchCatImageUseCaseProtocol {
-    func execute(breedId: String, completion: @escaping (Result<UIImage, Error>) -> Void)
+    func execute(breedId: String, completion: @escaping (Result<Data, Error>) -> Void)
 }
 
 final class FetchCatImageUseCase: FetchCatImageUseCaseProtocol {
@@ -18,7 +18,7 @@ final class FetchCatImageUseCase: FetchCatImageUseCaseProtocol {
         self.repository = repository
     }
     
-    func execute(breedId: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+    func execute(breedId: String, completion: @escaping (Result<Data, Error>) -> Void) {
         repository.fetchCatImage(breedId: breedId, completion: completion)
     }
 }
