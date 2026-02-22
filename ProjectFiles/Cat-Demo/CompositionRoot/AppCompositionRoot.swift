@@ -27,12 +27,19 @@ final class AppCompositionRoot {
         FetchCatBreedsPageUseCase(repository: breedsRepository)
     }
 
+    func makeSearchCatBreedsUseCase() -> SearchCatBreedsUseCaseProtocol {
+        SearchCatBreedsUseCase(repository: breedsRepository)
+    }
+
     func makeFetchCatImageUseCase() -> FetchCatImageUseCaseProtocol {
         FetchCatImageUseCase(repository: imagesRepository)
     }
 
     func makeBreedsListViewModel() -> BreedsListViewModel {
-        BreedsListViewModel(fetchBreedsPageUseCase: makeFetchCatBreedsPageUseCase())
+        BreedsListViewModel(
+            fetchBreedsPageUseCase: makeFetchCatBreedsPageUseCase(),
+            searchCatBreedsUseCase: makeSearchCatBreedsUseCase()
+        )
     }
 
     func makeBreedDetailViewModel(breed: CatBreed) -> BreedDetailViewModel {

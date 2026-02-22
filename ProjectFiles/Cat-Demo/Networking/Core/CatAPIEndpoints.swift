@@ -17,7 +17,14 @@ enum CatAPIEndpoints {
             ]
         )
     }
-    
+
+    static func breedSearch(query: String) -> APIEndpoint {
+        APIEndpoint(
+            path: "/v1/breeds/search",
+            queryItems: [URLQueryItem(name: "q", value: query)]
+        )
+    }
+
     static func imageSearch(breedId: String) -> APIEndpoint {
         APIEndpoint(
             path: "/v1/images/search",

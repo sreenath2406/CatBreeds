@@ -6,14 +6,24 @@ final class BreedsListViewController: UIViewController {
 
     private static let showBreedDetailsSegueIdentifier = "showBreedDetailsSegue"
     private lazy var viewModel: BreedsListViewModel = AppCompositionRoot.shared.makeBreedsListViewModel()
+    private let searchController = UISearchController(searchResultsController: nil)
+    private lazy var emptyStateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No breeds found"
+        label.textAlignment = .center
+        label.textColor = .secondaryLabel
+        label.font = .preferredFont(forTextStyle: .body)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 88
+        setupTableView()
+        setupSearchController()
+        setupEmptyStateLabel()
 
         viewModel.catDataDelegate = self
         viewModel.getBreeds()
@@ -26,20 +36,46 @@ final class BreedsListViewController: UIViewController {
 
         detailsViewController.viewModel = AppCompositionRoot.shared.makeBreedDetailViewModel(breed: selectedBreed)
     }
+
+    private func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 88
+    }
+
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        // We show results in the same table
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search breeds"
+        navigationItem.searchController = searchController
+        // Keep the bar pinned so users can search without scrolling to the top first.
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+    }
+
+    private func setupEmptyStateLabel() {
+        view.addSubview(emptyStateLabel)
+        NSLayoutConstraint.activate([
+            emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
 }
 
 // MARK: - UITableViewDataSource & UITableViewDelegate
 
 extension BreedsListViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.catBreeds.count
+        return viewModel.displayedBreeds.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "catBreed")
         ?? UITableViewCell(style: .subtitle, reuseIdentifier: "catBreed")
 
-        let breed = viewModel.catBreeds[indexPath.row]
+        let breed = viewModel.displayedBreeds[indexPath.row]
         var content = cell.defaultContentConfiguration()
         content.text = breed.name ?? "Unknown"
         content.secondaryText = breed.description ?? ""
@@ -51,13 +87,13 @@ extension BreedsListViewController: UITableViewDataSource, UITableViewDelegate {
 
     // Trigger the next page load when the last visible cell is about to appear.
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let lastRowIndex = viewModel.catBreeds.count - 1
+        let lastRowIndex = viewModel.displayedBreeds.count - 1
         guard indexPath.row == lastRowIndex else { return }
         viewModel.loadNextPage()
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedBreed = viewModel.catBreeds[indexPath.row]
+        let selectedBreed = viewModel.displayedBreeds[indexPath.row]
         performSegue(withIdentifier: Self.showBreedDetailsSegueIdentifier, sender: selectedBreed)
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -68,5 +104,14 @@ extension BreedsListViewController: UITableViewDataSource, UITableViewDelegate {
 extension BreedsListViewController: CatDataDelegate {
     func viewModelDidUpdateBreeds() {
         tableView.reloadData()
+        emptyStateLabel.isHidden = !(viewModel.isSearchActive && viewModel.displayedBreeds.isEmpty)
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension BreedsListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        viewModel.search(query: searchController.searchBar.text ?? "")
     }
 }

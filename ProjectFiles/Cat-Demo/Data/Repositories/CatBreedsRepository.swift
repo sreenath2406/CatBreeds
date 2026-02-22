@@ -17,4 +17,8 @@ final class CatBreedsRepository: CatBreedsRepositoryProtocol {
     func fetchBreedsPage(limit: Int, page: Int, completion: @escaping (Result<[CatBreed], Error>) -> Void) {
         apiClient.requestDecodable(CatAPIEndpoints.breeds(limit: limit, page: page), completion: completion)
     }
+
+    func searchBreeds(query: String, completion: @escaping (Result<[CatBreed], Error>) -> Void) {
+        apiClient.requestDecodable(CatAPIEndpoints.breedSearch(query: query), completion: completion)
+    }
 }
