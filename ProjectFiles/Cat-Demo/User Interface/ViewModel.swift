@@ -2,68 +2,91 @@
 import Foundation
 import UIKit
 
-/// Basic Delegate interface to send messages
-protocol CatDataDelegate {
-    func breedsChangedNotification()
-    func imageChangedNotification()
+/// Delegate that the ViewModel uses to notify its owner of state changes.
+protocol CatDataDelegate: AnyObject {
+    func viewModelDidUpdateBreeds()
+    func viewModelDidFetchImage()
 }
 
-/// View model
+/// View model for the breeds list screen.
+///
+/// All published state (`catBreeds`, `catImage`) is assigned on the main thread.
+/// Paging state is also mutated on the main thread to avoid data races.
 class ViewModel {
-    var catDataDelegate: CatDataDelegate?
+    weak var catDataDelegate: CatDataDelegate?
 
-    private let fetchAllBreedsUseCase: FetchAllCatBreedsUseCaseProtocol
+    private let fetchBreedsPageUseCase: FetchCatBreedsPageUseCaseProtocol
     private let fetchCatImageUseCase: FetchCatImageUseCaseProtocol
 
+    /// Number of breeds to request per page from the API.
+    private let pageSize = 20
+
+    // All paging state is read and written on the main thread.
+    private var currentPage = 0
+    private var isLoadingPage = false
+    private var reachedEnd = false
+
     init(
-        fetchAllBreedsUseCase: FetchAllCatBreedsUseCaseProtocol,
+        fetchBreedsPageUseCase: FetchCatBreedsPageUseCaseProtocol,
         fetchCatImageUseCase: FetchCatImageUseCaseProtocol
     ) {
-        self.fetchAllBreedsUseCase = fetchAllBreedsUseCase
+        self.fetchBreedsPageUseCase = fetchBreedsPageUseCase
         self.fetchCatImageUseCase = fetchCatImageUseCase
     }
 
-    /// Array of cat breeds
-    var catBreeds: [CatBreed]? {
-        didSet {
-            self.catDataDelegate?.breedsChangedNotification()
-        }
+    /// Accumulated list of cat breeds loaded so far.
+    var catBreeds: [CatBreed] = [] {
+        didSet { catDataDelegate?.viewModelDidUpdateBreeds() }
     }
 
-    /// Image of the cat
+    /// Most recently fetched cat image.
     var catImage: UIImage? {
-        didSet {
-            self.catDataDelegate?.imageChangedNotification()
-        }
+        didSet { catDataDelegate?.viewModelDidFetchImage() }
     }
 
-    /// Get the breeds
+    /// Resets paging state and loads the first page.
     func getBreeds() {
-        fetchAllBreedsUseCase.execute { [weak self] result in
-            switch result
-            {
-                case .success(let breeds):
-                    DispatchQueue.main.async {
-                        self?.catBreeds = breeds
-                    }
+        currentPage = 0
+        reachedEnd = false
+        catBreeds = []
+        loadNextPage()
+    }
 
-                case .failure(let error):
-                    print(error)
+    /// Fetches the next page and appends results. No-op if already loading or at end.
+    func loadNextPage() {
+        guard !isLoadingPage, !reachedEnd else { return }
+        isLoadingPage = true
+
+        fetchBreedsPageUseCase.execute(limit: pageSize, page: currentPage) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self else { return }
+                self.isLoadingPage = false
+
+                switch result {
+                    case .success(let pageBreeds):
+                        if pageBreeds.isEmpty {
+                            self.reachedEnd = true
+                        } else {
+                            self.currentPage += 1
+                            self.catBreeds.append(contentsOf: pageBreeds)
+                        }
+
+                    case .failure(let error):
+                        print(error)
+                }
             }
         }
     }
 
     func getCatImage(breedId: String) {
         fetchCatImageUseCase.execute(breedId: breedId) { [weak self] result in
-            switch result
-            {
-                case .success(let image):
-                    DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                switch result {
+                    case .success(let image):
                         self?.catImage = image
-                    }
-
-                case .failure(let error):
-                    print(error)
+                    case .failure(let error):
+                        print(error)
+                }
             }
         }
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 /// This is where we set up the app’s dependencies.
 ///
@@ -25,8 +24,8 @@ final class AppCompositionRoot {
     private lazy var breedsRepository: CatBreedsRepositoryProtocol = CatBreedsRepository(apiClient: apiClient)
     private lazy var imagesRepository: CatImagesRepositoryProtocol = CatImagesRepository(apiClient: apiClient)
 
-    func makeFetchAllCatBreedsUseCase() -> FetchAllCatBreedsUseCaseProtocol {
-        FetchAllCatBreedsUseCase(repository: breedsRepository)
+    func makeFetchCatBreedsPageUseCase() -> FetchCatBreedsPageUseCaseProtocol {
+        FetchCatBreedsPageUseCase(repository: breedsRepository)
     }
 
     func makeFetchCatImageUseCase() -> FetchCatImageUseCaseProtocol {
@@ -35,7 +34,7 @@ final class AppCompositionRoot {
 
     func makeBreedsListViewModel() -> ViewModel {
         ViewModel(
-            fetchAllBreedsUseCase: makeFetchAllCatBreedsUseCase(),
+            fetchBreedsPageUseCase: makeFetchCatBreedsPageUseCase(),
             fetchCatImageUseCase: makeFetchCatImageUseCase()
         )
     }

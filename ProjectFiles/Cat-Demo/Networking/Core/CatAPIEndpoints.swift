@@ -8,11 +8,6 @@
 import Foundation
 
 enum CatAPIEndpoints {
-    /// Returns all breeds. (`limit`/`page` omitted)
-    static func allBreeds() -> APIEndpoint {
-        APIEndpoint(path: "/v1/breeds")
-    }
-    
     static func breeds(limit: Int, page: Int) -> APIEndpoint {
         APIEndpoint(
             path: "/v1/breeds",

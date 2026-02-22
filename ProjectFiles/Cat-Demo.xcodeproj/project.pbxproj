@@ -25,11 +25,11 @@
 		936C77C22F491000006DDBF0 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936C77BD2F491000006DDBF0 /* APIClient.swift */; };
 		936C77C32F491000006DDBF0 /* CatBreedsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936C77BE2F491000006DDBF0 /* CatBreedsRepository.swift */; };
 		936C77C42F491000006DDBF0 /* CatImagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936C77BF2F491000006DDBF0 /* CatImagesRepository.swift */; };
-		936C77C52F491000006DDBF0 /* FetchAllCatBreedsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936C77C02F491000006DDBF0 /* FetchAllCatBreedsUseCase.swift */; };
 		936C77C62F491000006DDBF0 /* FetchCatImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936C77C12F491000006DDBF0 /* FetchCatImageUseCase.swift */; };
 		936C77DE2F4926A6006DDBF0 /* CatBreedsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936C77DC2F4926A6006DDBF0 /* CatBreedsRepositoryProtocol.swift */; };
 		936C77DF2F4926A6006DDBF0 /* CatImagesRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936C77DD2F4926A6006DDBF0 /* CatImagesRepositoryProtocol.swift */; };
 		936C77F32F495000006DDBF0 /* AppCompositionRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936C77F22F495000006DDBF0 /* AppCompositionRoot.swift */; };
+		936C78032F49C000006DDBF0 /* FetchCatBreedsPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936C78022F49C000006DDBF0 /* FetchCatBreedsPageUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,11 +74,11 @@
 		936C77BD2F491000006DDBF0 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		936C77BE2F491000006DDBF0 /* CatBreedsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatBreedsRepository.swift; sourceTree = "<group>"; };
 		936C77BF2F491000006DDBF0 /* CatImagesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatImagesRepository.swift; sourceTree = "<group>"; };
-		936C77C02F491000006DDBF0 /* FetchAllCatBreedsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAllCatBreedsUseCase.swift; sourceTree = "<group>"; };
 		936C77C12F491000006DDBF0 /* FetchCatImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCatImageUseCase.swift; sourceTree = "<group>"; };
 		936C77DC2F4926A6006DDBF0 /* CatBreedsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatBreedsRepositoryProtocol.swift; sourceTree = "<group>"; };
 		936C77DD2F4926A6006DDBF0 /* CatImagesRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatImagesRepositoryProtocol.swift; sourceTree = "<group>"; };
 		936C77F22F495000006DDBF0 /* AppCompositionRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCompositionRoot.swift; sourceTree = "<group>"; };
+		936C78022F49C000006DDBF0 /* FetchCatBreedsPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCatBreedsPageUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,7 +221,7 @@
 		936C77D12F492077006DDBF0 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
-				936C77C02F491000006DDBF0 /* FetchAllCatBreedsUseCase.swift */,
+				936C78022F49C000006DDBF0 /* FetchCatBreedsPageUseCase.swift */,
 				936C77C12F491000006DDBF0 /* FetchCatImageUseCase.swift */,
 			);
 			path = UseCases;
@@ -396,7 +396,7 @@
 				936C77C22F491000006DDBF0 /* APIClient.swift in Sources */,
 				936C77C32F491000006DDBF0 /* CatBreedsRepository.swift in Sources */,
 				936C77C42F491000006DDBF0 /* CatImagesRepository.swift in Sources */,
-				936C77C52F491000006DDBF0 /* FetchAllCatBreedsUseCase.swift in Sources */,
+				936C78032F49C000006DDBF0 /* FetchCatBreedsPageUseCase.swift in Sources */,
 				936C77C62F491000006DDBF0 /* FetchCatImageUseCase.swift in Sources */,
 				3FFC56E7262410DC00E6E5AE /* AppDelegate.swift in Sources */,
 				3FFC572D262412DF00E6E5AE /* ViewModel.swift in Sources */,

@@ -16,26 +16,27 @@ final class CatImagesRepository: CatImagesRepositoryProtocol {
     }
 
     func fetchCatImage(breedId: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        apiClient.requestDecodable(CatAPIEndpoints.imageSearch(breedId: breedId)) { (result: Result<[CatDetails], Error>) in
+        apiClient.requestDecodable(CatAPIEndpoints.imageSearch(breedId: breedId)) { [weak self] (result: Result<[CatDetails], Error>) in
+            guard let self else { return }
             switch result {
-                case .success(let details):
-                    guard let urlString = details.first?.url, let url = URL(string: urlString) else {
-                        return completion(.failure(NetworkError.noData))
-                    }
-                    self.apiClient.requestData(url: url) { dataResult in
-                        switch dataResult {
-                            case .success(let data):
-                                guard let image = UIImage(data: data) else {
-                                    return completion(.failure(NetworkError.imageDecodingFailed))
-                                }
-                                completion(.success(image))
-                            case .failure(let error):
-                                completion(.failure(error))
+            case .success(let details):
+                guard let urlString = details.first?.url, let url = URL(string: urlString) else {
+                    return completion(.failure(NetworkError.noData))
+                }
+                self.apiClient.requestData(url: url) { dataResult in
+                    switch dataResult {
+                    case .success(let data):
+                        guard let image = UIImage(data: data) else {
+                            return completion(.failure(NetworkError.imageDecodingFailed))
                         }
+                        completion(.success(image))
+                    case .failure(let error):
+                        completion(.failure(error))
                     }
+                }
 
-                case .failure(let error):
-                    completion(.failure(error))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

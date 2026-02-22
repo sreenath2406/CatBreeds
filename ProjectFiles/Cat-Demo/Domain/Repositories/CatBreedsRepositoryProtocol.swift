@@ -9,5 +9,4 @@ import Foundation
 
 protocol CatBreedsRepositoryProtocol {
     func fetchBreedsPage(limit: Int, page: Int, completion: @escaping (Result<[CatBreed], Error>) -> Void)
-    func fetchAllBreeds(completion: @escaping (Result<[CatBreed], Error>) -> Void)
 }
