@@ -11,44 +11,59 @@ protocol CatDataDelegate {
 /// View model
 class ViewModel {
     var catDataDelegate: CatDataDelegate?
-    
+
+    private let fetchAllBreedsUseCase: FetchAllCatBreedsUseCaseProtocol
+    private let fetchCatImageUseCase: FetchCatImageUseCaseProtocol
+
+    init(
+        fetchAllBreedsUseCase: FetchAllCatBreedsUseCaseProtocol,
+        fetchCatImageUseCase: FetchCatImageUseCaseProtocol
+    ) {
+        self.fetchAllBreedsUseCase = fetchAllBreedsUseCase
+        self.fetchCatImageUseCase = fetchCatImageUseCase
+    }
+
     /// Array of cat breeds
     var catBreeds: [CatBreed]? {
         didSet {
             self.catDataDelegate?.breedsChangedNotification()
         }
     }
-    
+
     /// Image of the cat
     var catImage: UIImage? {
         didSet {
             self.catDataDelegate?.imageChangedNotification()
         }
     }
-    
+
     /// Get the breeds
     func getBreeds() {
-        Network.fetchCatBreeds { (result) in
+        fetchAllBreedsUseCase.execute { [weak self] result in
             switch result
             {
-            case .success(let breeds):
-                self.catBreeds = breeds
-                
-            case .failure(let error):
-                print(error)
+                case .success(let breeds):
+                    DispatchQueue.main.async {
+                        self?.catBreeds = breeds
+                    }
+
+                case .failure(let error):
+                    print(error)
             }
         }
     }
-    
+
     func getCatImage(breedId: String) {
-        Network.fetchCatImage(breedId: breedId) { (result) in
+        fetchCatImageUseCase.execute(breedId: breedId) { [weak self] result in
             switch result
             {
-            case .success(let image):
-                self.catImage = image
-                
-            case .failure(let error):
-                print(error)
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        self?.catImage = image
+                    }
+
+                case .failure(let error):
+                    print(error)
             }
         }
     }
