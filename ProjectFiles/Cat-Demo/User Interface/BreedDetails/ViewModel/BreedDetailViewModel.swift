@@ -36,8 +36,11 @@ final class BreedDetailViewModel {
     private var isFetchingImage = false
 
     var wikipediaURL: URL? {
-        guard let raw = breed.wikipediaUrl?.trimmingCharacters(in: .whitespacesAndNewlines),
+        guard var raw = breed.wikipediaUrl?.trimmingCharacters(in: .whitespacesAndNewlines),
               !raw.isEmpty else { return nil }
+        if !raw.lowercased().hasPrefix("http://"), !raw.lowercased().hasPrefix("https://") {
+            raw = "https://\(raw)"
+        }
         return URL(string: raw)
     }
 
