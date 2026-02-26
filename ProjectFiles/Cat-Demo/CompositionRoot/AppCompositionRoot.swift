@@ -23,12 +23,24 @@ final class AppCompositionRoot {
     private lazy var breedsRepository: CatBreedsRepositoryProtocol = CatBreedsRepository(apiClient: apiClient)
     private lazy var imagesRepository: CatImagesRepositoryProtocol = CatImagesRepository(apiClient: apiClient)
 
+    private lazy var catBreedFilterService: CatBreedFilterService = {
+        do {
+            return try CatBreedFilterService(minConfidence: 0.70)
+        } catch {
+            fatalError("CatBreedFilterService failed to load Core ML model: \(error)")
+        }
+    }()
+
     func makeFetchCatBreedsPageUseCase() -> FetchCatBreedsPageUseCaseProtocol {
         FetchCatBreedsPageUseCase(repository: breedsRepository)
     }
 
     func makeSearchCatBreedsUseCase() -> SearchCatBreedsUseCaseProtocol {
         SearchCatBreedsUseCase(repository: breedsRepository)
+    }
+
+    func makeFilterCatBreedsUseCase() -> FilterCatBreedsUseCaseProtocol {
+        FilterCatBreedsUseCase(filterService: catBreedFilterService)
     }
 
     func makeFetchCatImageUseCase() -> FetchCatImageUseCaseProtocol {
@@ -38,7 +50,8 @@ final class AppCompositionRoot {
     func makeBreedsListViewModel() -> BreedsListViewModel {
         BreedsListViewModel(
             fetchBreedsPageUseCase: makeFetchCatBreedsPageUseCase(),
-            searchCatBreedsUseCase: makeSearchCatBreedsUseCase()
+            searchCatBreedsUseCase: makeSearchCatBreedsUseCase(),
+            filterCatBreedsUseCase: makeFilterCatBreedsUseCase()
         )
     }
 

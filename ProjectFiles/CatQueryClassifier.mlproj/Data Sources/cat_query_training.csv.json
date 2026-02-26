@@ -1,0 +1,90 @@
+{
+  "activityEntities" : [
+    "dataSourceCreated",
+    [
+      {
+        "createdDate" : "2026-02-26T05:10:32Z",
+        "event" : "dataSourceCreated",
+        "id" : "7A3EB51E-F5BF-4576-9DEC-7C03AAC4A58A",
+        "subtitle" : "cat_query_training.csv",
+        "title" : "Data Source Created"
+      }
+    ],
+    "dataSourceTrainingStarted",
+    [
+      {
+        "createdDate" : "2026-02-26T05:10:45Z",
+        "event" : "dataSourceTrainingStarted",
+        "id" : "57E4A319-EA96-41D9-8594-4E70C9337417",
+        "subtitle" : "CatQueryClassifier 1",
+        "title" : "Used By"
+      }
+    ],
+    "dataSourceMetrics",
+    [
+      {
+        "createdDate" : "2026-02-26T05:10:45Z",
+        "event" : "dataSourceMetrics",
+        "id" : "D3693E0B-4011-4E1B-8E50-0D63895B1D7F",
+        "subtitle" : "3 Classes, 334 Items",
+        "title" : "Data Summary"
+      }
+    ]
+  ],
+  "createdDate" : "2026-02-26T05:10:32Z",
+  "dataPathRelativeToProjectURL" : "../../../../../Downloads/cat_query_training.csv/",
+  "dataResult" : {
+    "classesCount" : 3,
+    "createdDate" : "2026-02-26T05:10:32Z",
+    "dataAnalysis" : {
+      "classifierAnalysis" : {
+        "labelStats" : {
+          "child_friendly" : 111,
+          "dog_friendly" : 114,
+          "grooming" : 109
+        }
+      },
+      "issues" : [
+        {
+          "description" : "3 classes found, including dog_friendly, child_friendly, grooming",
+          "severity" : "debug"
+        },
+        {
+          "description" : "334 texts found, automatically creating validation set",
+          "severity" : "good"
+        },
+        {
+          "description" : "Smallest class is \"grooming\" with 109 texts",
+          "severity" : "debug"
+        },
+        {
+          "description" : "Largest class is \"dog_friendly\" with 114 text",
+          "severity" : "debug"
+        }
+      ],
+      "objectDetectorAnalysis" : {
+        "details" : {
+
+        }
+      },
+      "summary" : {
+        "canUseValidation" : 1,
+        "classCount" : 3,
+        "sampleCount" : 334
+      }
+    },
+    "dataSourceID" : "EF027BC1-0E8B-4308-8225-314074334CFA",
+    "dataURL" : "file:///Users/sreenathreddybollam_1/Downloads/cat_query_training.csv",
+    "itemsCount" : 334
+  },
+  "dataURL" : "file:///Users/sreenathreddybollam_1/Downloads/cat_query_training.csv",
+  "experimentIDs" : [
+    "19D863F6-9E95-48D2-A93F-860F0197F994"
+  ],
+  "id" : "EF027BC1-0E8B-4308-8225-314074334CFA",
+  "modifiedDate" : "2026-02-26T05:10:45Z",
+  "pathType" : 0,
+  "preferredFilename" : "cat_query_training.csv",
+  "title" : "cat_query_training.csv",
+  "version" : "1.0"
+}

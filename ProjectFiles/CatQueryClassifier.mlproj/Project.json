@@ -1,0 +1,29 @@
+{
+  "activityEntities" : [
+    "projectCreated",
+    [
+      {
+        "createdDate" : "2026-02-25T17:21:12Z",
+        "event" : "projectCreated",
+        "id" : "3F9C3F88-B730-4F74-87FC-5C664AC8AC67",
+        "subtitle" : "CatQueryClassifier",
+        "title" : "Project Created"
+      }
+    ]
+  ],
+  "authorName" : "Sreenath Reddy",
+  "createdDate" : "2026-02-25T17:21:12Z",
+  "description" : "",
+  "id" : "C125809F-6C53-48FF-A245-58D563225526",
+  "license" : "",
+  "location" : "",
+  "modifiedDate" : "2026-02-25T17:21:12Z",
+  "projectName" : "CatQueryClassifier",
+  "settingsEntity" : {
+    "snapshotOnExtendTraining" : true,
+    "snapshotOnResumeTraining" : false
+  },
+  "taskType" : "textClassifier",
+  "title" : "Text Classification",
+  "version" : "1.1"
+}

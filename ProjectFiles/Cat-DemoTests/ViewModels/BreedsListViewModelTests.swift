@@ -12,9 +12,11 @@ final class BreedsListViewModelTests: XCTestCase {
     func testGetBreedsRequestsFirstPageWithDefaultPageSize() {
         let fetchSpy = FetchCatBreedsPageUseCaseSpy()
         let searchSpy = SearchCatBreedsUseCaseSpy()
+        let filterSpy = FilterCatBreedsUseCaseSpy()
         let sut = BreedsListViewModel(
             fetchBreedsPageUseCase: fetchSpy,
             searchCatBreedsUseCase: searchSpy,
+            filterCatBreedsUseCase: filterSpy,
             searchDebounceInterval: 0,
             searchScheduler: .main
         )
@@ -22,16 +24,18 @@ final class BreedsListViewModelTests: XCTestCase {
         sut.getBreeds()
         
         XCTAssertEqual(fetchSpy.executeCalls.count, 1)
-        XCTAssertEqual(fetchSpy.executeCalls.first?.limit, 20)
+        XCTAssertEqual(fetchSpy.executeCalls.first?.limit, 100) // For now, we hardcoded the limit to 100.
         XCTAssertEqual(fetchSpy.executeCalls.first?.page, 0)
     }
     
     func testLoadNextPageAppendsAndRequestsNextPage() {
         let fetchSpy = FetchCatBreedsPageUseCaseSpy()
         let searchSpy = SearchCatBreedsUseCaseSpy()
+        let filterSpy = FilterCatBreedsUseCaseSpy()
         let sut = BreedsListViewModel(
             fetchBreedsPageUseCase: fetchSpy,
             searchCatBreedsUseCase: searchSpy,
+            filterCatBreedsUseCase: filterSpy,
             searchDebounceInterval: 0,
             searchScheduler: .main
         )
@@ -53,9 +57,11 @@ final class BreedsListViewModelTests: XCTestCase {
     func testLoadNextPageStopsAfterEmptyPage() {
         let fetchSpy = FetchCatBreedsPageUseCaseSpy()
         let searchSpy = SearchCatBreedsUseCaseSpy()
+        let filterSpy = FilterCatBreedsUseCaseSpy()
         let sut = BreedsListViewModel(
             fetchBreedsPageUseCase: fetchSpy,
             searchCatBreedsUseCase: searchSpy,
+            filterCatBreedsUseCase: filterSpy,
             searchDebounceInterval: 0,
             searchScheduler: .main
         )
@@ -70,9 +76,11 @@ final class BreedsListViewModelTests: XCTestCase {
     func testSearchTrimsQueryAndUsesSearchUseCase() {
         let fetchSpy = FetchCatBreedsPageUseCaseSpy()
         let searchSpy = SearchCatBreedsUseCaseSpy()
+        let filterSpy = FilterCatBreedsUseCaseSpy()
         let sut = BreedsListViewModel(
             fetchBreedsPageUseCase: fetchSpy,
             searchCatBreedsUseCase: searchSpy,
+            filterCatBreedsUseCase: filterSpy,
             searchDebounceInterval: 0,
             searchScheduler: .main
         )
@@ -80,7 +88,7 @@ final class BreedsListViewModelTests: XCTestCase {
         
         sut.search(query: "  aby  ")
         DispatchQueue.main.async {
-            XCTAssertEqual(searchSpy.executeCalls, ["aby"])
+            XCTAssertEqual(filterSpy.executeCalls.map(\.query), ["aby"])
             exp.fulfill()
         }
         
@@ -90,9 +98,11 @@ final class BreedsListViewModelTests: XCTestCase {
     func testSearchClearDisablesSearchAndRestoresBrowseList() {
         let fetchSpy = FetchCatBreedsPageUseCaseSpy()
         let searchSpy = SearchCatBreedsUseCaseSpy()
+        let filterSpy = FilterCatBreedsUseCaseSpy()
         let sut = BreedsListViewModel(
             fetchBreedsPageUseCase: fetchSpy,
             searchCatBreedsUseCase: searchSpy,
+            filterCatBreedsUseCase: filterSpy,
             searchDebounceInterval: 0,
             searchScheduler: .main
         )
@@ -102,7 +112,7 @@ final class BreedsListViewModelTests: XCTestCase {
         fetchSpy.complete(with: .success([TestFixtures.makeBreed(id: "abys", name: "Abyssinian")]))
         sut.search(query: "abc")
         DispatchQueue.main.async {
-            searchSpy.complete(with: .success([]))
+            filterSpy.complete(with: .success([]))
             sut.search(query: "   ")
             XCTAssertFalse(sut.isSearchActive)
             XCTAssertEqual(sut.displayedBreeds.count, 1)
@@ -115,10 +125,12 @@ final class BreedsListViewModelTests: XCTestCase {
     func testSearchDebounceUsesLatestQueryOnly() {
         let fetchSpy = FetchCatBreedsPageUseCaseSpy()
         let searchSpy = SearchCatBreedsUseCaseSpy()
+        let filterSpy = FilterCatBreedsUseCaseSpy()
         let scheduler = DispatchQueue(label: "search.scheduler")
         let sut = BreedsListViewModel(
             fetchBreedsPageUseCase: fetchSpy,
             searchCatBreedsUseCase: searchSpy,
+            filterCatBreedsUseCase: filterSpy,
             searchDebounceInterval: 0.05,
             searchScheduler: scheduler
         )
@@ -129,7 +141,7 @@ final class BreedsListViewModelTests: XCTestCase {
         sut.search(query: "aby")
         
         scheduler.asyncAfter(deadline: .now() + 0.1) {
-            XCTAssertEqual(searchSpy.executeCalls, ["aby"])
+            XCTAssertEqual(filterSpy.executeCalls.map(\.query), ["aby"])
             exp.fulfill()
         }
         

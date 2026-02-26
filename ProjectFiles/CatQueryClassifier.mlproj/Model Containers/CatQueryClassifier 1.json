@@ -1,0 +1,581 @@
+{
+  "activityEntities" : [
+    "trainingStarted",
+    [
+      {
+        "createdDate" : "2026-02-26T05:10:45Z",
+        "event" : "trainingStarted",
+        "id" : "0E1F512F-7F22-4238-AB5B-55588B0128F1",
+        "subtitle" : "10 iterations",
+        "title" : "Training Started"
+      }
+    ],
+    "trainingDataAdded",
+    [
+      {
+        "createdDate" : "2026-02-26T05:10:32Z",
+        "event" : "trainingDataAdded",
+        "id" : "8C0BF15C-BE57-481A-A4FE-73A1041957D1",
+        "subtitle" : "cat_query_training.csv",
+        "title" : "Training Data Added"
+      }
+    ],
+    "experimentCreated",
+    [
+      {
+        "createdDate" : "2026-02-25T17:21:13Z",
+        "event" : "experimentCreated",
+        "id" : "E8891D45-A745-42A8-8D49-05BE7FDEF193",
+        "subtitle" : "CatQueryClassifier 1",
+        "title" : "Model Source Created"
+      }
+    ],
+    "trainingFinished",
+    [
+      {
+        "createdDate" : "2026-02-26T05:10:45Z",
+        "event" : "trainingFinished",
+        "id" : "E32CFD19-7EFC-4235-A819-99B39C6C9658",
+        "subtitle" : "Model converged at 2 iterations",
+        "title" : "Training Completed"
+      }
+    ]
+  ],
+  "contentDataResult" : {
+    "createdDate" : "2026-02-26T05:10:32Z"
+  },
+  "createdDate" : "2026-02-25T17:21:13Z",
+  "evaluationContainerEntity" : {
+    "createdDate" : "2026-02-26T05:10:45Z",
+    "evaluationEntities" : [
+      {
+        "analysedDataType" : "none",
+        "createdDate" : "2026-02-26T05:10:45Z",
+        "dataResult" : {
+
+        },
+        "id" : "a3d554d1-784c-429f-a330-1b20056583e0"
+      }
+    ],
+    "id" : "cafb2b1e-e33f-4fe9-ba6a-8ce8c17f6d02",
+    "modifiedDate" : "2026-02-26T05:10:45Z",
+    "previewType" : "textClassifier",
+    "testingEvaluationEntity" : {
+      "analysedDataType" : "none",
+      "createdDate" : "2026-02-25T17:21:13Z",
+      "dataResult" : {
+        "createdDate" : "2026-02-26T05:10:32Z"
+      },
+      "id" : "930a15b7-2d73-4e2b-853e-eff513f35a2b"
+    },
+    "trainingEvaluationEntity" : {
+      "analysedDataType" : "none",
+      "createdDate" : "2026-02-25T17:21:13Z",
+      "dataResult" : {
+        "classesCount" : 3,
+        "createdDate" : "2026-02-26T05:10:32Z",
+        "dataAnalysis" : {
+          "classifierAnalysis" : {
+            "labelStats" : {
+              "child_friendly" : 111,
+              "dog_friendly" : 114,
+              "grooming" : 109
+            }
+          },
+          "issues" : [
+            {
+              "description" : "3 classes found, including dog_friendly, child_friendly, grooming",
+              "severity" : "debug"
+            },
+            {
+              "description" : "334 texts found, automatically creating validation set",
+              "severity" : "good"
+            },
+            {
+              "description" : "Smallest class is \"grooming\" with 109 texts",
+              "severity" : "debug"
+            },
+            {
+              "description" : "Largest class is \"dog_friendly\" with 114 text",
+              "severity" : "debug"
+            }
+          ],
+          "objectDetectorAnalysis" : {
+            "details" : {
+
+            }
+          },
+          "summary" : {
+            "canUseValidation" : 1,
+            "classCount" : 3,
+            "sampleCount" : 334
+          }
+        },
+        "dataSourceID" : "EF027BC1-0E8B-4308-8225-314074334CFA",
+        "dataURL" : "file:///Users/sreenathreddybollam_1/Downloads/cat_query_training.csv",
+        "itemsCount" : 334
+      },
+      "dataSourceID" : "EF027BC1-0E8B-4308-8225-314074334CFA",
+      "evaluationResult" : {
+        "textClassifier" : {
+          "accuracy" : 1,
+          "confusionMatrix" : [
+            {
+              "actual" : "child_friendly",
+              "count" : 104,
+              "expected" : "child_friendly"
+            },
+            {
+              "actual" : "dog_friendly",
+              "count" : 108,
+              "expected" : "dog_friendly"
+            },
+            {
+              "actual" : "grooming",
+              "count" : 106,
+              "expected" : "grooming"
+            }
+          ],
+          "statsByLabel" : {
+            "child_friendly" : {
+              "count" : 104,
+              "precisionRecall" : {
+                "success" : {
+                  "precision" : 1,
+                  "recall" : 1
+                }
+              }
+            },
+            "dog_friendly" : {
+              "count" : 108,
+              "precisionRecall" : {
+                "success" : {
+                  "precision" : 1,
+                  "recall" : 1
+                }
+              }
+            },
+            "grooming" : {
+              "count" : 106,
+              "precisionRecall" : {
+                "success" : {
+                  "precision" : 1,
+                  "recall" : 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "id" : "d6cb00a7-403f-4f48-a863-6cad91a5a610"
+    },
+    "validationEvaluationEntity" : {
+      "analysedDataType" : "auto",
+      "createdDate" : "2026-02-25T17:21:13Z",
+      "dataResult" : {
+        "createdDate" : "2026-02-26T05:10:32Z"
+      },
+      "evaluationResult" : {
+        "textClassifier" : {
+          "accuracy" : 1,
+          "confusionMatrix" : [
+            {
+              "actual" : "child_friendly",
+              "count" : 7,
+              "expected" : "child_friendly"
+            },
+            {
+              "actual" : "dog_friendly",
+              "count" : 6,
+              "expected" : "dog_friendly"
+            },
+            {
+              "actual" : "grooming",
+              "count" : 3,
+              "expected" : "grooming"
+            }
+          ],
+          "statsByLabel" : {
+            "child_friendly" : {
+              "count" : 7,
+              "precisionRecall" : {
+                "success" : {
+                  "precision" : 1,
+                  "recall" : 1
+                }
+              }
+            },
+            "dog_friendly" : {
+              "count" : 6,
+              "precisionRecall" : {
+                "success" : {
+                  "precision" : 1,
+                  "recall" : 1
+                }
+              }
+            },
+            "grooming" : {
+              "count" : 3,
+              "precisionRecall" : {
+                "success" : {
+                  "precision" : 1,
+                  "recall" : 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "id" : "d57d7c94-7cbf-4748-85f1-0e52ee5d8db9"
+    }
+  },
+  "evaluationEntity" : {
+    "analysedDataType" : "none",
+    "dataResult" : {
+
+    },
+    "id" : "d2fac1cb-8d1a-4075-bd13-5e7758cb765b"
+  },
+  "evaluationState" : "uninitialized",
+  "id" : "19D863F6-9E95-48D2-A93F-860F0197F994",
+  "modelEntity" : {
+    "createdDate" : "2026-02-25T17:21:13Z",
+    "experimentID" : "19D863F6-9E95-48D2-A93F-860F0197F994",
+    "id" : "7843329E-F89C-4BE7-8FCF-4AA5B70C8433",
+    "modelURL" : "Models/CatQueryClassifier%201.mlmodel",
+    "modifiedDate" : "2026-02-25T17:21:13Z",
+    "title" : "",
+    "version" : "1.0"
+  },
+  "modifiedDate" : "2026-02-26T05:10:45Z",
+  "preferredFilename" : "CatQueryClassifier 1",
+  "settingEntity" : {
+    "algorithmType" : "maxEnt",
+    "augmentations" : [
+
+    ],
+    "featureNames" : [
+
+    ],
+    "handActionClassifierAugmentations" : [
+
+    ],
+    "handPoseClassifierAugmentations" : [
+
+    ],
+    "harVideoAugmentations" : 0,
+    "iterationCount" : 10,
+    "seedType" : "default",
+    "styleTransferAlgorithmType" : "image",
+    "taskType" : "textClassifier",
+    "textClassifierArabicLanguage" : "automatic",
+    "textClassifierCJKLanguage" : "automatic",
+    "textClassifierCyrillicLanguage" : "automatic",
+    "textClassifierIndicLanguage" : "automatic",
+    "textClassifierLatin" : "automatic",
+    "textClassifierScript" : "latin",
+    "textClassifierThaiLanguage" : "automatic"
+  },
+  "snapshotRole" : {
+    "withoutSnapshots" : 0
+  },
+  "state" : "trained",
+  "title" : "CatQueryClassifier 1",
+  "trainingEntity" : {
+    "analysedDataType" : "datasource",
+    "checkpointMetrics" : {
+
+    },
+    "dataResult" : {
+      "classesCount" : 3,
+      "createdDate" : "2026-02-26T05:10:32Z",
+      "dataAnalysis" : {
+        "classifierAnalysis" : {
+          "labelStats" : {
+            "child_friendly" : 111,
+            "dog_friendly" : 114,
+            "grooming" : 109
+          }
+        },
+        "issues" : [
+          {
+            "description" : "3 classes found, including dog_friendly, child_friendly, grooming",
+            "severity" : "debug"
+          },
+          {
+            "description" : "334 texts found, automatically creating validation set",
+            "severity" : "good"
+          },
+          {
+            "description" : "Smallest class is \"grooming\" with 109 texts",
+            "severity" : "debug"
+          },
+          {
+            "description" : "Largest class is \"dog_friendly\" with 114 text",
+            "severity" : "debug"
+          }
+        ],
+        "objectDetectorAnalysis" : {
+          "details" : {
+
+          }
+        },
+        "summary" : {
+          "canUseValidation" : 1,
+          "classCount" : 3,
+          "sampleCount" : 334
+        }
+      },
+      "dataSourceID" : "EF027BC1-0E8B-4308-8225-314074334CFA",
+      "dataURL" : "file:///Users/sreenathreddybollam_1/Downloads/cat_query_training.csv",
+      "itemsCount" : 334
+    },
+    "dataSourceID" : "EF027BC1-0E8B-4308-8225-314074334CFA",
+    "featureExtractionCheckpointMayBeAvailable" : false,
+    "finishTime" : "2026-02-26T05:10:45Z",
+    "progress" : [
+      {
+        "count" : 1,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 1,
+        "tcTrainingColumnHeader" : {
+          "elapsedTime" : 0,
+          "hasTraining" : true,
+          "hasValidation" : false,
+          "remainingIterationCount" : 10,
+          "trainingAccuracy" : 0.3333333432674408,
+          "validationAccuracy" : 0
+        }
+      },
+      {
+        "count" : 2,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : true,
+        "tableIndex" : 1,
+        "tcTrainingColumnHeader" : {
+          "elapsedTime" : 0,
+          "hasTraining" : true,
+          "hasValidation" : false,
+          "remainingIterationCount" : 9,
+          "trainingAccuracy" : 0.9968553185462952,
+          "validationAccuracy" : 0
+        }
+      },
+      {
+        "count" : 18,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 48,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 78,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 108,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 138,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 168,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 198,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 228,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 258,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 288,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : false,
+        "tableIndex" : 0
+      },
+      {
+        "count" : 318,
+        "currentRowIndex" : 0,
+        "isLast" : false,
+        "percentComplete" : 0,
+        "tableDone" : true,
+        "tableIndex" : 0
+      }
+    ],
+    "snapshottableCheckpoints" : {
+
+    },
+    "startTime" : "2026-02-26T05:10:45Z",
+    "trainingAccuracy" : 1,
+    "trainingResults" : {
+      "textClassifier" : {
+        "accuracy" : 1,
+        "confusionMatrix" : [
+          {
+            "actual" : "child_friendly",
+            "count" : 104,
+            "expected" : "child_friendly"
+          },
+          {
+            "actual" : "dog_friendly",
+            "count" : 108,
+            "expected" : "dog_friendly"
+          },
+          {
+            "actual" : "grooming",
+            "count" : 106,
+            "expected" : "grooming"
+          }
+        ],
+        "statsByLabel" : {
+          "child_friendly" : {
+            "count" : 104,
+            "precisionRecall" : {
+              "success" : {
+                "precision" : 1,
+                "recall" : 1
+              }
+            }
+          },
+          "dog_friendly" : {
+            "count" : 108,
+            "precisionRecall" : {
+              "success" : {
+                "precision" : 1,
+                "recall" : 1
+              }
+            }
+          },
+          "grooming" : {
+            "count" : 106,
+            "precisionRecall" : {
+              "success" : {
+                "precision" : 1,
+                "recall" : 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "validationAccuracy" : 1,
+    "validationResults" : {
+      "textClassifier" : {
+        "accuracy" : 1,
+        "confusionMatrix" : [
+          {
+            "actual" : "child_friendly",
+            "count" : 7,
+            "expected" : "child_friendly"
+          },
+          {
+            "actual" : "dog_friendly",
+            "count" : 6,
+            "expected" : "dog_friendly"
+          },
+          {
+            "actual" : "grooming",
+            "count" : 3,
+            "expected" : "grooming"
+          }
+        ],
+        "statsByLabel" : {
+          "child_friendly" : {
+            "count" : 7,
+            "precisionRecall" : {
+              "success" : {
+                "precision" : 1,
+                "recall" : 1
+              }
+            }
+          },
+          "dog_friendly" : {
+            "count" : 6,
+            "precisionRecall" : {
+              "success" : {
+                "precision" : 1,
+                "recall" : 1
+              }
+            }
+          },
+          "grooming" : {
+            "count" : 3,
+            "precisionRecall" : {
+              "success" : {
+                "precision" : 1,
+                "recall" : 1
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "validationEntity" : {
+    "analysedDataType" : "auto",
+    "dataResult" : {
+      "createdDate" : "2026-02-26T05:10:32Z"
+    },
+    "splitOptions" : {
+      "strategy" : {
+        "automatic" : {
+
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

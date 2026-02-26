@@ -43,6 +43,24 @@ final class SearchCatBreedsUseCaseSpy: SearchCatBreedsUseCaseProtocol {
     }
 }
 
+final class FilterCatBreedsUseCaseSpy: FilterCatBreedsUseCaseProtocol {
+    private(set) var executeCalls: [(query: String, breeds: [CatBreed])] = []
+    var pendingCompletion: ((Result<[CatBreed], Error>) -> Void)?
+
+    func execute(
+        query: String,
+        breeds: [CatBreed],
+        completion: @escaping (Result<[CatBreed], Error>) -> Void
+    ) {
+        executeCalls.append((query, breeds))
+        pendingCompletion = completion
+    }
+
+    func complete(with result: Result<[CatBreed], Error>) {
+        pendingCompletion?(result)
+    }
+}
+
 final class FetchCatImageUseCaseSpy: FetchCatImageUseCaseProtocol {
     private(set) var executeCalls: [String] = []
     var pendingCompletion: ((Result<Data, Error>) -> Void)?

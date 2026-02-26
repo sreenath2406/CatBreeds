@@ -5,16 +5,18 @@ protocol CatDataDelegate: AnyObject {
     func viewModelDidUpdateBreeds()
 }
 
-// Handles fetching and paginating the breeds list, plus name-based search.
+// Handles fetching and paginating the breeds list, plus AI-based local search.
 final class BreedsListViewModel {
     weak var catDataDelegate: CatDataDelegate?
 
     private let fetchBreedsPageUseCase: FetchCatBreedsPageUseCaseProtocol
-    private let searchCatBreedsUseCase: SearchCatBreedsUseCaseProtocol
+    private let filterCatBreedsUseCase: FilterCatBreedsUseCaseProtocol
     private let searchDebounceInterval: TimeInterval
     private let searchScheduler: DispatchQueue
 
     private let pageSize = 20
+    /// First page loads full dataset so AI search has all breeds to filter
+    private let initialPageSize = 100
     private var currentPage = 0
     private var isLoadingPage = false
     private var reachedEnd = false
@@ -38,12 +40,13 @@ final class BreedsListViewModel {
 
     init(
         fetchBreedsPageUseCase: FetchCatBreedsPageUseCaseProtocol,
-        searchCatBreedsUseCase: SearchCatBreedsUseCaseProtocol,
+        searchCatBreedsUseCase _: SearchCatBreedsUseCaseProtocol,
+        filterCatBreedsUseCase: FilterCatBreedsUseCaseProtocol,
         searchDebounceInterval: TimeInterval = 0.3,
         searchScheduler: DispatchQueue = .main
     ) {
         self.fetchBreedsPageUseCase = fetchBreedsPageUseCase
-        self.searchCatBreedsUseCase = searchCatBreedsUseCase
+        self.filterCatBreedsUseCase = filterCatBreedsUseCase
         self.searchDebounceInterval = searchDebounceInterval
         self.searchScheduler = searchScheduler
     }
@@ -59,11 +62,13 @@ final class BreedsListViewModel {
 
     // Loads the next page and appends to the list.
     // No-op while search is active so we don't mix results.
+    // First page fetches full dataset (100) so AI search filters from all breeds.
     func loadNextPage() {
         guard !isSearchActive, !isLoadingPage, !reachedEnd else { return }
         isLoadingPage = true
+        let limit = currentPage == 0 ? initialPageSize : pageSize
 
-        fetchBreedsPageUseCase.execute(limit: pageSize, page: currentPage) { [weak self] result in
+        fetchBreedsPageUseCase.execute(limit: limit, page: currentPage) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self else { return }
                 self.isLoadingPage = false
@@ -110,7 +115,7 @@ final class BreedsListViewModel {
     private func performSearch(query: String) {
         isSearchActive = true
 
-        searchCatBreedsUseCase.execute(query: query) { [weak self] result in
+        filterCatBreedsUseCase.execute(query: query, breeds: allBreeds) { [weak self] result in
             DispatchQueue.main.async {
                 guard let self else { return }
                 switch result {
